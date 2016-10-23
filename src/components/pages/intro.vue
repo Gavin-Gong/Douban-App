@@ -60,7 +60,7 @@
         // background-image: url(~assets/images/logo.png);
         background-repeat: no-repeat;
         background-size: cover;
-        filter: blur(5px);
+        filter: blur(35px);
       }
       img {
         position: absolute;
