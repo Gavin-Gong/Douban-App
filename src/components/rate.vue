@@ -1,10 +1,7 @@
 <template>
   <div class="rate-star">
-    <span class="star">
-      <m-icon v-for="i in hasstar" name="star" size="11"></m-icon>
-    </span><span class="no-star" v-if="unstar">
-      <m-icon v-for="i in unstar" name="star" size="11"></m-icon>
-    </span>
+      <m-icon v-for="i in hasstar" name="star" size="11" color="#eaea05"></m-icon>
+      <m-icon v-for="i in unstar" name="star" size="11" color="#dedddd"></m-icon>
     <slot></slot>
   </div>
 </template>
@@ -40,17 +37,5 @@
 <style lang="scss">
   .rate-star {
     display: inline-block;
-    .star {
-      vertical-align: middle;
-      i {
-        color: #eaea05;
-      }
-    }
-    .no-star {
-      vertical-align: middle;
-      i {
-        color: #dedddd;
-      }
-    }
   }
 </style>

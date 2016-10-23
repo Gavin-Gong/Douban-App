@@ -1,0 +1,2 @@
+webpackJsonp([2,3],{72:function(t,e,n){var o,r,i=n(83);r=o=o||{},"object"!=typeof o["default"]&&"function"!=typeof o["default"]||(r=o=o["default"]),"function"==typeof r&&(r=r.options),r.render=i.render,r.staticRenderFns=i.staticRenderFns,t.exports=o},83:function(module,exports){module.exports={render:function(){with(this)return _m(0)},staticRenderFns:[function(){with(this)return _h("p",["fsdihfih"])}]}}});
+//# sourceMappingURL=2.55caf72cd319a51c7e3b.js.map

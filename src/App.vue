@@ -30,8 +30,8 @@ body {
 }
 
 #app a {
-  color: #42b983;
   text-decoration: none;
+  color: #000;
 }
 
 </style>

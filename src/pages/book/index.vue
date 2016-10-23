@@ -3,7 +3,7 @@
   <!-- <div>book components</div> -->
   <div id="book">
     <search v-model="searchText">
-      <router-link :to="{name: 'book-detal'}" v-for="item in searchResult.books">
+      <router-link :to="{name: 'book-detail'}" v-for="item in searchResult.books">
         <cell :title="item.title"></cell>
       </router-link>
     </search>
@@ -12,7 +12,7 @@
     <group>
       <title-bar title="JavaScript" :link="{name: 'movie'}"></title-bar>
       <div class="show-area">
-        <div class="show-item-wrapper" :style="'width:' +   110 * 10 + 'px;'">
+        <div class="show-item-wrapper" :style="'width:' +   1110 + 'px;'">
           <show-case
             v-for="item in jsBooks"
             :imgurl="item.images.large"
@@ -31,7 +31,7 @@
     <group>
       <title-bar title="心理学" :link="{name: 'movie'}"></title-bar>
       <div class="show-area">
-        <div class="show-item-wrapper" :style="'width:' +   110 * 10 + 'px;'">
+        <div class="show-item-wrapper" :style="'width:' +   1110 + 'px;'">
           <show-case
             v-for="item in psyBooks"
             :imgurl="item.images.large"

@@ -3,9 +3,10 @@
     <div class="expand-text">
       <!-- <slot></slot> -->
       <p>{{title}}</p>
-      <p :style="tempToggle ? '-webkit-line-clamp: 10000;' : '-webkit-line-clamp: ' + line + ';'">{{text ? text : '暂无' + title}}</p>
+      <p v-if="type === 'text'" :style="tempToggle ? '-webkit-line-clamp: 10000;' : '-webkit-line-clamp: ' + line + ';'">{{content ? content : '暂无' + title}}</p>
+      <p v-if="type === 'html'" :style="tempToggle ? '-webkit-line-clamp: 10000;' : '-webkit-line-clamp: ' + line + ';'" v-html="content ? content : '暂无' + title"></p>
     </div>
-    <div v-if="text" :class="['toggle-btn', tempToggle ? 'up-arrow' : 'down-arrow']" @click="toggleText"></div>
+    <div v-if="content" :class="['toggle-btn', tempToggle ? 'up-arrow' : 'down-arrow']" @click="toggleText"></div>
   </div>
 </template>
 
@@ -14,15 +15,19 @@
     props: {
       line: {
         type: [Number, String],
-        default: 6
+        default: 4
       },
       title: {
         type: String,
         required: true
       },
-      text: {
+      content: {
         type: String,
         required: true
+      },
+      type: {
+        type: String,
+        default: 'text'
       },
       toggle: {
         type: Boolean,
@@ -48,6 +53,7 @@
 
 <style lang="scss">
   .expand {
+    margin-bottom:  10px;
     .expand-text {
       >p {
         &:first-child {

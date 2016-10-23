@@ -8,6 +8,9 @@ import routes from './router'
 import VueResource from 'Vue-resource'
 // import MintUI from 'mint-ui'
 
+import { InfiniteScroll } from 'mint-ui'
+Vue.use(InfiniteScroll)
+
 /* eslint-disable no-new */
 Vue.use(VueRouter)
 Vue.use(Vuex)
