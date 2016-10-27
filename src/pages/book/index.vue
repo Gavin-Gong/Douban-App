@@ -1,22 +1,21 @@
 
 <template>
-  <!-- <div>book components</div> -->
-  <div id="book">
+  <div id="book-page">
     <search v-model="searchText">
-      <router-link :to="{name: 'book-detail'}" v-for="item in searchResult.books">
+      <router-link :to="{name: 'book-detail', params: {bookId: item.id}}" v-for="item in searchResult.books">
         <cell :title="item.title"></cell>
       </router-link>
     </search>
 
     <!-- JS -->
-    <group>
-      <title-bar title="JavaScript" :link="{name: 'movie'}"></title-bar>
+    <group v-show="jsBooks">
+      <title-bar title="JavaScript" :link="{name: 'book-list', params: {tagId: 'JavaScript'}}"></title-bar>
       <div class="show-area">
         <div class="show-item-wrapper" :style="'width:' +   1110 + 'px;'">
           <show-case
             v-for="item in jsBooks"
             :imgurl="item.images.large"
-            :link="{name: 'book-detail', params: {id: item.id}}"
+            :link="{name: 'book-detail', params: {bookId: item.id}}"
             :title="item.title">
             <!-- <span slot="content" class="rating-text">评分: {{item.rating.average}}</span> -->
             <rate :star="item.rating.average" slot="content">
@@ -28,14 +27,14 @@
     </group>
 
     <!-- psy -->
-    <group>
-      <title-bar title="心理学" :link="{name: 'movie'}"></title-bar>
+    <group v-show="psyBooks">
+      <title-bar title="心理学" :link="{name: 'book-list', params: {tagId: '心理学'}}"></title-bar>
       <div class="show-area">
         <div class="show-item-wrapper" :style="'width:' +   1110 + 'px;'">
           <show-case
             v-for="item in psyBooks"
             :imgurl="item.images.large"
-            :link="{name: 'book-detail', params: {id: item.id}}"
+            :link="{name: 'book-detail', params: {bookId: item.id}}"
             :title="item.title">
             <!-- <span slot="content" class="rating-text">评分: {{item.rating.average}}</span> -->
             <rate :star="item.rating.average" slot="content">
@@ -51,7 +50,7 @@
       <show-case
         v-if="randomBook"
         :imgurl="randomBook.image"
-        :link="{name: 'book-detail', params: {id: randomBook.id}}"
+        :link="{name: 'book-detail', params: {bookId: randomBook.id}}"
         :title="randomBook.title"></show-case>
       <div class="no-content" v-if="!randomBook">并不是每次随机都能获取到到书</div>
       <br>
@@ -62,17 +61,16 @@
     </group>
     <!-- get book  by select tag -->
   </div>
-
-
 </template>
 
 <script>
-  import { Search, Cell } from 'mint-ui'
-  import TitleBar from 'components/title-bar'
-  import Group from 'components/group'
-  import ShowCase from 'components/show-case'
-  import MIcon from 'components/m-icon'
-  import Rate from 'components/rate'
+  /* eslint-disable*/
+  import { Search, Cell } from 'mint-ui';
+  import TitleBar from 'components/title-bar';
+  import Group from 'components/group';
+  import ShowCase from 'components/show-case';
+  import MIcon from 'components/m-icon';
+  import Rate from 'components/rate';
 
   export default {
     components: {
@@ -82,7 +80,7 @@
       ShowCase,
       Group,
       Rate,
-      MIcon
+      MIcon,
     },
     data () {
       return {
@@ -90,50 +88,58 @@
         searchResult: '',
         jsBooks: '',
         psyBooks: '',
-        randomBook: ''
-      }
+        randomBook: '',
+      };
     },
     methods: {
       getSearchData () {
-        this.$http.jsonp(`book/search?q=${this.searchText}`).then(res => {
-          console.log(res.data)
-          this.searchResult = res.data
-        })
+        this.$http.get(`book/search?q=${this.searchText}`).then(res => {
+          console.log(res);
+          this.searchResult = res.data;
+        }).catch(err => {
+          console.info(err);
+        });
       },
       getBooks (tag, storeKey) {
-        this.$http.jsonp(`book/search?tag=${tag}&count=10`).then(res => {
-          console.log(res.data)
-          this.$set(this, storeKey, res.data.books)
-        })
+        // TDDO promise嵌套
+        return this.$http.get(`book/search?tag=${tag}&count=10`).then(res => {
+          console.log(res.data);
+          this.$set(this, storeKey, res.data.books);
+        });
       },
       getRandomBook () {
-        let randomId = Math.floor(Math.random() * (99999999 - 1111111 + 1)) + 1111111
-        this.$http.jsonp(`book/${randomId}`).then(res => {
-        // this.$http.jsonp(`book/1111111`).then(res => {
-          console.log(res)
-          this.randomBook = res.data
-          console.log(this.randomBook)
+        let randomId = Math.floor(Math.random() * (99999999 - 1111111 + 1)) + 1111111;
+        this.$http.get(`book/${randomId}`).then(res => {
+          console.log(res);
+          this.randomBook = res.data;
+          console.log(this.randomBook);
         }).catch(() => {
-          console.log('err')
-        })
-      }
+          console.log('err');
+        });
+      },
     },
     watch: {
       searchText (val, oldVal) {
         if (this.searchText.trim()) {
-          this.getSearchData()
+          this.getSearchData();
         }
-      }
+      },
     },
     created () {
-      this.getBooks('JavaScript', 'jsBooks')
-      this.getBooks('心理学', 'psyBooks')
-    }
-  }
+      Indicator.open()
+      let p1 = this.getBooks('JavaScript', 'jsBooks');
+      let p2 = this.getBooks('心理学', 'psyBooks');
+      Promise.all([p1, p2]).then(() => {
+        Indicator.close()
+      });
+      // this.getBooks('JavaScript', 'jsBooks');
+      // this.getBooks('心理学', 'psyBooks');
+    },
+  };
 </script>
 
 <style lang="scss">
-#book {
+#book-page {
   .mint-cell-wrapper .mint-cell-title{
     white-space: nowrap;
     overflow: hidden;

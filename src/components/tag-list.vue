@@ -1,6 +1,8 @@
 <template>
   <ul class="tag-list l-spacing">
-    <li v-for="tag in tags" class="tag">{{ tag.name }}</li>
+    <router-link :to="link">
+      <li v-for="tag in tags" class="tag">{{ tag.name }}</li>
+    </router-link>
   </ul>
 </template>
 
@@ -9,10 +11,14 @@ export default {
   props: {
     tags: {
       type: Array,
-      required: true
-    }
-  }
-}
+      required: true,
+    },
+    link: {
+      type: [String, Object],
+      default: '',
+    },
+  },
+};
 </script>
 
 <style lang="scss">
@@ -21,7 +27,7 @@ export default {
   // padding-left: 10px;
   margin-left: -10px;
   margin-top: -14px;
-  >.tag {
+  .tag {
     position: relative;
     display: inline-block;
     margin-left: 10px;

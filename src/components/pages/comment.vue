@@ -13,29 +13,29 @@
 </template>
 
 <script>
-  import MIcon from 'components/m-icon'
+  import MIcon from 'components/m-icon';
   export default {
     components: {
-      MIcon
+      MIcon,
     },
     props: {
       imgurl: {
         type: String,
-        required: true
+        required: true,
       },
       name: {
         type: String,
-        required: true
+        required: true,
       },
       text: {
         type: String,
-        required: true
+        required: true,
       },
       hot: {
-        type: [Number, String]
-      }
-    }
-  }
+        type: [Number, String],
+      },
+    },
+  };
 </script>
 
 <style lang="scss" scoped>

@@ -14,16 +14,16 @@
     props: {
       imgurl: {
         type: String,
-        default: 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2291015098,628551162&fm=116&gp=0.jpg'
+        default: 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2291015098,628551162&fm=116&gp=0.jpg',
       },
       title: {
-        type: String
+        type: String,
       },
       link: {
-        type: Object
-      }
-    }
-  }
+        type: Object,
+      },
+    },
+  };
 </script>
 <style lang="scss">
   .show-item {

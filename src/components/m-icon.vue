@@ -7,26 +7,26 @@ export default {
   props: {
     name: {
       type: String,
-      required: true
+      required: true,
     },
     size: {
       type: [Number, String],
-      default: 24
+      default: 24,
     },
     color: {
       type: String,
-      default: '#222'
-    }
+      default: '#222',
+    },
   },
   data () {
     return {
       style: {
         fontSize: this.size + 'px',
-        color: this.color
-      }
-    }
-  }
-}
+        color: this.color,
+      },
+    };
+  },
+};
 </script>
 <style lang="scss">
 @import '~assets/styles/iconfont.scss';

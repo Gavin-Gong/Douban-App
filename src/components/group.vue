@@ -8,10 +8,10 @@ export default {
   props: {
     extClass: {
       type: String,
-      default: ''
-    }
-  }
-}
+      default: '',
+    },
+  },
+};
 </script>
 <style>
   .group-content {

@@ -15,40 +15,40 @@
     props: {
       line: {
         type: [Number, String],
-        default: 4
+        default: 4,
       },
       title: {
         type: String,
-        required: true
+        required: true,
       },
       content: {
         type: String,
-        required: true
+        required: true,
       },
       type: {
         type: String,
-        default: 'text'
+        default: 'text',
       },
       toggle: {
         type: Boolean,
-        default: false
-      }
+        default: false,
+      },
     },
     data () {
       return {
-        tempToggle: this.toggle
-      }
+        tempToggle: this.toggle,
+      };
     },
     methods: {
       toggleText () {
         if (this.tempToggle) {
-          this.tempToggle = false
+          this.tempToggle = false;
         } else {
-          this.tempToggle = true
+          this.tempToggle = true;
         }
-      }
-    }
-  }
+      },
+    },
+  };
 </script>
 
 <style lang="scss">

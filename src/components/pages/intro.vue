@@ -19,45 +19,43 @@
   </div>
 </template>
   <script>
-    import MIcon from 'components/m-icon'
-    import Rate from 'components/rate'
+    import MIcon from 'components/m-icon';
+    import Rate from 'components/rate';
     export default {
       components: {
         MIcon,
-        Rate
+        Rate,
       },
       props: {
         title: {
-          type: String
+          type: String,
         },
         star: {
-          type: [Number, String]
+          type: [Number, String],
         },
         hot: {
-          type: [String, Number]
+          type: [String, Number],
         },
         sty: {
           type: String,
-          default: ''
+          default: '',
         },
         imgurl: {
-          type: String
-        }
-      }
-    }
+          type: String,
+        },
+      },
+    };
   </script>
   <style lang="scss" scoped>
   .intro {
     .banner-box {
       position: relative;
-      // margin-top: 40px;
       text-align: center;
       .banner-bg {
         position: relative;
         overflow: hidden;
         width: 100%;
         height: 250px;
-        // background-image: url(~assets/images/logo.png);
         background-repeat: no-repeat;
         background-size: cover;
         filter: blur(35px);
@@ -79,7 +77,7 @@
       .left-info {
       }
       .right-info {
-        width: 100px;
+        flex: 0 0 100px;
         text-align: center;
         padding-top: 10px;
         height: 100px;

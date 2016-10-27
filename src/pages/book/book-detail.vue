@@ -1,5 +1,5 @@
 <template>
-<div id="book-detail">
+<div id="book-detail" v-if="bookDetail">
   <intro :title="bookDetail.title" :star="bookDetail.rating.average"
     :hot="bookDetail.rating.numRaters"
     :imgurl="bookDetail.images.large">
@@ -12,12 +12,14 @@
   </expand>
   <expand title="作者简介" :content="bookDetail.author_intro">
   </expand>
-  <expand title="目录" :content="bookDetail.catalog.replace(/\n/g, '</br>')" type="html">
+  <expand title="目录" :content="bookDetail.catalog.replace(/\n/g, '<br>')" type="html">
   </expand>
   <div class="comment-list"
         v-infinite-scroll="getAnnotations"
-        infinite-scroll-disabled="isNoScroll">
-    <router-link to="{name: 'annotation', params: {id: item.id}}" v-for="item in commentList">
+        infinite-scroll-disabled="isNoScroll"
+        infinite-scroll-distance="10">
+    <h3 class="l-spacing comment-title" v-if="commentList.length">读书笔记</h3>
+    <router-link v-for="item in commentList" :to="{name: 'annotation', params: {annotationId: item.id, bookId: $route.params.bookId}}">
       <comment
         :imgurl="item.author_user.large_avatar"
         :name="item.author_user.name"
@@ -25,17 +27,25 @@
         :hot="item.comments_count">
       </comment>
     </router-link>
+    <p v-show="loading" class="infinite-scroll-icon">
+      <mt-spinner type="fading-circle"></mt-spinner>
+    </p>
+    <p class="infinite-scroll-icon" v-show="isNoScroll">
+      没有更多了！
+    </p>
   </div>
 </div>
 
 </template>
 
 <script>
-  import Rate from 'components/rate'
-  import Intro from 'components/pages/intro'
-  import Expand from 'components/expand'
-  import TagList from 'components/tag-list'
-  import Comment from 'components/pages/comment'
+  import Rate from 'components/rate';
+  import Intro from 'components/pages/intro';
+  import Expand from 'components/expand';
+  import TagList from 'components/tag-list';
+  import Comment from 'components/pages/comment';
+  import { Spinner } from 'mint-ui';
+  Vue.component(Spinner.name, Spinner);
 
   export default {
     data () {
@@ -43,66 +53,93 @@
         bookDetail: '',
         commentList: [],
         isNoScroll: false,
+        loading: true,
         query: {
           start: 0,
-          count: 10
-        }
-      }
+          count: 10,
+          lastReq: '',
+        },
+      };
     },
     components: {
       Rate,
       Intro,
       Expand,
       TagList,
-      Comment
+      Comment,
     },
     methods: {
       getBookDetail () {
-        Indicator.open()
-        this.$http.jsonp(`book/${this.$route.params.id}`).then(res => {
-          Indicator.close()
+        Indicator.open();
+        this.$http.get(`book/${this.$route.params.bookId}`).then(res => {
+          Indicator.close();
           if (res.status === 200) {
-            this.bookDetail = res.data
-            console.log(this.bookDetail.rating.average)
+            this.bookDetail = res.data;
+            console.log(this.bookDetail.rating.average);
           } else {
             // $(this)
           }
-        })
+        });
       },
       getAnnotations () {
-        this.$http.jsonp(`book/${this.$route.params.id}/annotations?start=${this.query.start}&count=${this.query.count}`).then(res => {
-          console.log(`book/${this.$route.params.id}/annotations?start=${this.query.start}&count=${this.query.count}`)
-          if (res.status === 200) {
-            if (res.data.annotations.length < this.query.count) {
-              this.isNoScroll = true
+        if (!this.isNoScroll) {
+          this.loading = true;
+        }
+        let annotationUrl = `book/${this.$route.params.bookId}/annotations?start=${this.query.start}&count=${this.query.count}`;
+        if (annotationUrl !== this.query.lastReq || !this.query.lastReq) {
+          this.$http.get(annotationUrl).then(res => {
+            this.loading = false;
+            if (res.status === 200) {
+              // 避免多次请求导致数据重复
+              console.log(res.data);
+              this.commentList.push(...res.data.annotations);
+              this.query.start += this.query.count;
+
+              // 返回数据小于指定长度则不再触发事件
+              if (res.data.annotations.length < this.query.count) {
+                this.isNoScroll = true;
+                console.log('不再获取数据');
+              } else {
+                console.log('准备下一条数据获取');
+              }
             } else {
-              this.query.start += 10
+              console.err('get comment fail');
             }
-            this.commentList.push(...res.data.annotations)
-            console.log(this.commentList)
-            // this.commentList = res.data.annotations
-          } else {
-            console.err('get comment fail')
-          }
-        })
+          });
+        } else {
+          console.log('no repeat request');
+          this.loading = false;
+        }
+        this.query.lastReq = annotationUrl;
       },
       loadMore () {
-        console.log('loadMore')
+        console.log('loadMore');
       },
       join (arr) {
-        return arr.join(', ')
-      }
-
+        return arr.join(', ');
+      },
     },
     created () {
-      this.getBookDetail()
-      this.getAnnotations()
-    }
-  }
+      this.getBookDetail();
+      this.getAnnotations();
+    },
+  };
 </script>
 
 <style lang="scss">
 #book-detail {
-  padding-bottom: 40px;
+  // padding-top: 20px;
+  // padding-bottom: 40px;
+  background-color: #eee;
+  .comment-title {
+    margin-bottom: 15px;
+    padding-left: 15px;
+  }
+  .infinite-scroll-icon {
+    text-align: center;
+    .mint-spinner-fading-circle {
+      display: inline-block;
+    }
+  }
 }
 </style>

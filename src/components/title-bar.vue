@@ -16,31 +16,31 @@
 </template>
 
 <script>
-  import MIcon from 'components/m-icon'
+  import MIcon from 'components/m-icon';
   export default {
     components: {
-      MIcon
+      MIcon,
     },
     props: {
       title: {
-        type: String
+        type: String,
       },
       text: {
         type: String,
-        default: '更多'
+        default: '更多',
       },
       icon: {
         type: [String, Boolean],
-        default: 'keyboard_arrow_right'
+        default: 'keyboard_arrow_right',
       },
       size: {
-        type: [Number, String]
+        type: [Number, String],
       },
       link: {
-        type: Object
-      }
-    }
-  }
+        type: Object,
+      },
+    },
+  };
 </script>
 
 <style lang="scss">

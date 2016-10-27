@@ -6,16 +6,16 @@
   </div>
 </template>
 <script>
-  import MIcon from 'components/m-icon'
+  import MIcon from 'components/m-icon';
   export default {
     components: {
-      MIcon
+      MIcon,
     },
     props: {
       star: {
         type: [Number, String],
-        default: 0
-      }
+        default: 0,
+      },
     },
     // create () {
     //   console.log(this.star)
@@ -24,14 +24,13 @@
     computed: {
       // TODO 在computed之前改变数据?
       unstar () {
-        return Math.round((10 - parseInt(this.star)) / 2)
+        return Math.round((10 - parseInt(this.star)) / 2);
       },
       hasstar () {
-        console.log(this.unstar)
-        return 5 - parseInt(this.unstar)
-      }
-    }
-  }
+        return 5 - parseInt(this.unstar);
+      },
+    },
+  };
 </script>
 
 <style lang="scss">

@@ -1,0 +1,27 @@
+  /*1px*/
+.onepx-t {
+  position: relative;
+}
+.onepx-t:after {
+  position: absolute;
+  top:0;
+  left: 0;
+  content: '';
+  width: 100%;
+  height: 1px;
+  background-color: #dadada;
+  transform: scaleY(.5);
+}
+.onepx-b {
+    position: relative;
+}
+.onepx-b:after {
+  position: absolute;
+  bottom:0;
+  left: 0;
+  content: '';
+  width: 100%;
+  height: 1px;
+  transform: scaleY(.5);
+  background-color: #dadada;
+}

@@ -21,8 +21,8 @@
 
 <script>
   // import Vue from 'vue'
-  import {Tabbar, TabItem} from 'mint-ui'
-  import MIcon from 'components/m-icon'
+  import {Tabbar, TabItem} from 'mint-ui';
+  import MIcon from 'components/m-icon';
   // Vue.component(Tabbar.name, Tabbar)
   // Vue.component(TabItem.name, TabItem)
 
@@ -30,26 +30,26 @@
     components: {
       MIcon,
       Tabbar,
-      TabItem
+      TabItem,
     },
     data () {
       return {
-        selected: 'book'
-      }
+        selected: 'book',
+      };
     },
     methods: {
       goMovie () {
-        console.log('here')
-        this.$route.router.go({name: 'movie'})
-      }
+        console.log('here');
+        this.$route.router.go({name: 'movie'});
+      },
     },
     watch: {
       selected (val, oldVal) {
-        this.$router.replace({name: this.selected})
+        this.$router.replace({name: this.selected});
       },
       '$route' (val, oldVal) {
 
-      }
-    }
-  }
+      },
+    },
+  };
 </script>

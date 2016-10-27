@@ -5,12 +5,12 @@
   </div>
 </template>
 <script>
-import NavBar from './nav-bar'
+import NavBar from './nav-bar';
 export default {
   components: {
-    NavBar
-  }
-}
+    NavBar,
+  },
+};
 </script>
 
 <style lang="scss">
