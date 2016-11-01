@@ -1,7 +1,7 @@
 <template>
-  <ul class="tag-list l-spacing">
-    <router-link :to="link">
-      <li v-for="tag in tags" class="tag">{{ tag.name }}</li>
+  <ul class="tag-list">
+    <router-link v-for="tag in tags" :to="tag.link">
+      <li class="tag" style="">{{ tag.tag }}</li>
     </router-link>
   </ul>
 </template>
@@ -13,31 +13,28 @@ export default {
       type: Array,
       required: true,
     },
-    link: {
-      type: [String, Object],
-      default: '',
-    },
   },
 };
+// TODO book-detail data 处理
 </script>
 
 <style lang="scss">
 .tag-list {
   list-style: none;
-  // padding-left: 10px;
+  padding-left: 0;
   margin-left: -10px;
-  margin-top: -14px;
+  margin-top: 0;
+  margin-bottom: 10px;
   .tag {
     position: relative;
     display: inline-block;
     margin-left: 10px;
-    margin-top: 14px;
     padding: 6px 6px;
     text-align: center;
     font-size: 12px;
     line-height: 1;
-    // border: 1px solid #333;
     color: #b5b501;
+    margin-top: 10px;
 
     &:after {
       content: '';

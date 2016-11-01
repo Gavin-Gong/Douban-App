@@ -45,8 +45,13 @@
       </div>
     </group>
 
+    <!-- tag-list -->
+    <group class="l-spacing">
+      <!-- <h3>标签搜索</h3> -->
+      <tag-list :tags="tagList"></tag-list>
+    </group>
     <!-- random book -->
-    <group ext-class="random-book">
+    <group class="random-book">
       <show-case
         v-if="randomBook"
         :imgurl="randomBook.image"
@@ -64,13 +69,15 @@
 </template>
 
 <script>
-  /* eslint-disable*/
+  /* eslint-disable */
   import { Search, Cell } from 'mint-ui';
   import TitleBar from 'components/title-bar';
   import Group from 'components/group';
   import ShowCase from 'components/show-case';
   import MIcon from 'components/m-icon';
   import Rate from 'components/rate';
+  import TagList from 'components/tag-list';
+
 
   export default {
     components: {
@@ -81,6 +88,7 @@
       Group,
       Rate,
       MIcon,
+      TagList,
     },
     data () {
       return {
@@ -89,6 +97,15 @@
         jsBooks: '',
         psyBooks: '',
         randomBook: '',
+        tagList: [
+          {tag: 'JavaScript', link: {name: 'book-list', params: {tagId: 'JavaScript'}}},
+          {tag: '心理学', link: {name: 'book-list', params: {tagId: '心理学'}}},
+          {tag: '哲学', link: {name: 'book-list', params: {tagId: '哲学'}}},
+          {tag: '传播学', link: {name: 'book-list', params: {tagId: '传播学'}}},
+          {tag: 'Python', link: {name: 'book-list', params: {tagId: 'Python'}}},
+          {tag: '机器学习', link: {name: 'book-list', params: {tagId: '机器学习'}}},
+          {tag: 'Java', link: {name: 'book-list', params: {tagId: 'Java'}}},
+        ],
       };
     },
     methods: {
@@ -125,16 +142,16 @@
         }
       },
     },
-    created () {
-      Indicator.open()
-      let p1 = this.getBooks('JavaScript', 'jsBooks');
-      let p2 = this.getBooks('心理学', 'psyBooks');
-      Promise.all([p1, p2]).then(() => {
-        Indicator.close()
-      });
-      // this.getBooks('JavaScript', 'jsBooks');
-      // this.getBooks('心理学', 'psyBooks');
-    },
+    beforeRouteEnter (to, from, next) {
+      next (vm => {
+        Indicator.open()
+        let p1 = vm.getBooks('JavaScript', 'jsBooks');
+        let p2 = vm.getBooks('心理学', 'psyBooks');
+        Promise.all([p1, p2]).then(() => {
+          Indicator.close()
+        });
+      })
+    }
   };
 </script>
 

@@ -7,7 +7,7 @@
     <p>出版社: {{ bookDetail.publisher ? bookDetail.publisher : '暂无' }}</p>
     <p>出版时间: {{ bookDetail.pubdate ? bookDetail.pubdate : '暂无'}}</p>
   </intro>
-  <tag-list :tags="bookDetail.tags"></tag-list>
+  <!-- <tag-list :tags="bookDetail.tags"></tag-list> -->
   <expand title="内容简介" :content="bookDetail.summary">
   </expand>
   <expand title="作者简介" :content="bookDetail.author_intro">

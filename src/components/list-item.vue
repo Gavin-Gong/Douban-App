@@ -59,6 +59,9 @@
     }
     .item-center {
       margin-left: 10px;
+      * {
+        max-width: calc(100vw - 110px);
+      }
     }
   }
 </style>

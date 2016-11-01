@@ -4,7 +4,7 @@ const BookDetail = resolve => (require(['./pages/book/book-detail'], resolve));
 // const BookList = resolve => (require(['./pages/book/book-list'], resolve));
 import BookList from './pages/book/book-list';
 // 为什么这样不行???
-// const Annotation = reslove => (require(['./pages/book/annotation']))
+// const Annotation = reslove => (require(['./pages/book/annotation'], resolve));
 import Annotation from './pages/book/annotation';
 const Movie = resolve => (require(['./pages/movie/index.vue'], resolve));
 const notFound = resolve => (require(['./pages/stat/404'], resolve));
