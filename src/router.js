@@ -12,7 +12,6 @@ import Movie from './pages/movie';
 import MovieDetail from './pages/movie/movie-detail';
 const notFound = resolve => (require(['./pages/stat/404'], resolve));
 
-// test components
 import Lab from './pages/lab/lab';
 const routes = [
   {

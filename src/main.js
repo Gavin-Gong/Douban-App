@@ -34,6 +34,7 @@ Vue.http.interceptors.push((request, next) => {
 const router = new VueRouter({
   routes,
   base: '/',
+  mode: 'history',
 });
 router.afterEach((to, from, next) => {
   Indicator.close();
