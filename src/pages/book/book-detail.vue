@@ -30,7 +30,7 @@
     <p v-show="loading" class="infinite-scroll-icon">
       <mt-spinner type="fading-circle"></mt-spinner>
     </p>
-    <p class="infinite-scroll-icon" v-show="isNoScroll">
+    <p class="infinite-scroll-icon" v-show="isNoScroll && commentList.length">
       没有更多了！
     </p>
   </div>
@@ -118,6 +118,13 @@
       join (arr) {
         return arr.join(', ');
       },
+    },
+    activated () {
+      console.log('activated');
+    },
+    deactivated () {
+      // keep-alive 组件离开时将组件destroy， 防止下次进入相同的页面。
+      this.$destroy();
     },
     created () {
       this.getBookDetail();

@@ -1,5 +1,5 @@
 <template>
-  <div class="" :class="['group-content', extClass]">
+  <div :class="['group-content', extClass]">
     <slot></slot>
   </div>
 </template>
@@ -7,7 +7,7 @@
 export default {
   props: {
     extClass: {
-      type: String,
+      type: [String, Array],
       default: '',
     },
   },

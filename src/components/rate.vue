@@ -1,7 +1,6 @@
 <template>
   <div class="rate-star">
-      <m-icon v-for="i in hasstar" name="star" size="11" color="#eaea05"></m-icon>
-      <m-icon v-for="i in unstar" name="star" size="11" color="#dedddd"></m-icon>
+      <m-icon v-for="i in hasstar" name="star" size="11" color="#eaea05"></m-icon><m-icon v-for="i in unstar" name="star" size="11" color="#dedddd"></m-icon>
     <slot></slot>
   </div>
 </template>

@@ -17,6 +17,9 @@
   <p v-show="loading" class="infinite-scroll-icon" style="text-align: center;">
     <mt-spinner type="fading-circle"></mt-spinner>
   </p>
+  <p style="text-align: center" v-show="isNoScroll && bookList.length">
+    没有更多了！
+  </p>
 </div>
 </template>
 
@@ -44,19 +47,6 @@
       };
     },
     methods: {
-      // getBookList () {
-      //   // Indicator.open();
-      //   this.$http.get(`book/search?tag=${this.$route.params.tagId}&start=${this.query.start}&count=${this.query.count}`).then(res => {
-      //     // Indicator.close();
-      //     if (res.status === 200) {
-      //       this.bookList.push(...res.data.books);
-      //       console.log(this.bookList);
-      //       this.query.start += this.query.count;
-      //     } else {
-      //       console.log('err');
-      //     }
-      //   });
-      // },
       getBookList () {
         if (!this.isNoScroll) {
           this.loading = true;
@@ -96,6 +86,10 @@
     created () {
       Indicator.open();
       this.getBookList();
+    },
+    deactivated () {
+      // keep-alive 组件离开时将组件destroy， 防止下次进入相同的页面。
+      this.$destroy();
     },
   };
 </script>

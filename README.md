@@ -1,9 +1,11 @@
 # Douban-App
 Douban Web App build with Vue 2.0
 ## TODO
+- [ ] transition
 - [ ] 记住滚动位置
+- [X] keep-alive
 - [ ] 全局filters
-- [ ] 试试vuex
+- [X] 试试vuex
 - [ ] 命名规范
 - [ ] api代理
 - [ ] vue-router 各种配置

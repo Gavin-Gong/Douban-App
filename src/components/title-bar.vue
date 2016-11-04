@@ -5,7 +5,7 @@
       <!-- <div class="sub-titlt">{{}}</div> -->
       <slot name="sub-titlt"></slot>
     </div>
-    <router-link :to="link">
+    <router-link :to="link" v-if="link">
       <div class="title-bar-right">
         <span class="link-text">{{text}}</span>
         <m-icon v-if="icon" :name= "icon" :size="size" class="link-icon"></m-icon>
@@ -37,34 +37,31 @@
         type: [Number, String],
       },
       link: {
-        type: Object,
+        type: [Object, String],
+        default: '',
       },
     },
   };
 </script>
 
 <style lang="scss">
-  .title-bar {
-    position: relative;
-    overflow: hidden;
-    padding-top: 10px;
-    padding-bottom: 10px;
-     .title-bar-left {
-      font-size: 16px;
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-     }
-     .title-bar-right {
-      float: right;
-      .link-text {
-        vertical-align: middle;
-        margin-right: -10px;
+    .title-bar {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 10px;
+      padding-bottom: 10px;
+       .title-bar-left {
+        font-size: 16px;
+       }
+       .title-bar-right {
+        .link-text {
+          vertical-align: middle;
+          margin-right: -10px;
+        }
+        .link-icon {
+          vertical-align: middle;
+          margin-right: -5px;
+        }
       }
-      .link-icon {
-        vertical-align: middle;
-        margin-right: -5px;
-      }
-     }
   }
 </style>

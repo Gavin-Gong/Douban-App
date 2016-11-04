@@ -11,7 +11,7 @@
     <group v-show="jsBooks">
       <title-bar title="JavaScript" :link="{name: 'book-list', params: {tagId: 'JavaScript'}}"></title-bar>
       <div class="show-area">
-        <div class="show-item-wrapper" :style="'width:' +   1110 + 'px;'">
+        <div class="show-item-wrapper" :style="{width: showAreaWidth}">
           <show-case
             v-for="item in jsBooks"
             :imgurl="item.images.large"
@@ -30,7 +30,7 @@
     <group v-show="psyBooks">
       <title-bar title="心理学" :link="{name: 'book-list', params: {tagId: '心理学'}}"></title-bar>
       <div class="show-area">
-        <div class="show-item-wrapper" :style="'width:' +   1110 + 'px;'">
+        <div class="show-item-wrapper" :style="{width: showAreaWidth}">
           <show-case
             v-for="item in psyBooks"
             :imgurl="item.images.large"
@@ -118,7 +118,6 @@
         });
       },
       getBooks (tag, storeKey) {
-        // TDDO promise嵌套
         return this.$http.get(`book/search?tag=${tag}&count=10`).then(res => {
           console.log(res.data);
           this.$set(this, storeKey, res.data.books);
@@ -129,7 +128,6 @@
         this.$http.get(`book/${randomId}`).then(res => {
           console.log(res);
           this.randomBook = res.data;
-          console.log(this.randomBook);
         }).catch(() => {
           console.log('err');
         });
@@ -142,16 +140,25 @@
         }
       },
     },
+    computed: {
+      showAreaWidth () {
+        return this.$store.state.showCase.showCaseWidth * 10 + 100 + 'px'
+      },
+    },
+    // 使用了keep-alive， 所以先判断是否get数据了，有数据的话就不要重新请求了 尽管beforeRouteEnter的执行时机先于created.
     beforeRouteEnter (to, from, next) {
+      console.log('router enter', Date.now());
       next (vm => {
-        Indicator.open()
-        let p1 = vm.getBooks('JavaScript', 'jsBooks');
-        let p2 = vm.getBooks('心理学', 'psyBooks');
-        Promise.all([p1, p2]).then(() => {
-          Indicator.close()
-        });
-      })
-    }
+        if (!vm.jsBooks && !vm.psyBooks) {
+          Indicator.open()
+          let p1 = vm.getBooks('JavaScript', 'jsBooks');
+          let p2 = vm.getBooks('心理学', 'psyBooks');
+          Promise.all([p1, p2]).then(() => {
+            Indicator.close()
+          });
+        }
+      });
+    },
   };
 </script>
 
@@ -175,10 +182,11 @@
     overflow-y: scroll;
     .show-item-wrapper {
       .show-item {
+        margin-left: 10px;
         .rating-text {
           margin-left: 4px;
           position: relative;
-          top: -2px;
+          // top: -2px;
           font-size: 12px;
           color: #282828;
           vertical-align: middle;

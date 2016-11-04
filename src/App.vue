@@ -1,15 +1,19 @@
 <template>
   <div id="app">
+    <keep-alive>
      <router-view></router-view>
+     </keep-alive>
     <nav-bar></nav-bar>
   </div>
 </template>
 <script>
 import NavBar from './nav-bar';
+import store from 'src/store';
 export default {
   components: {
     NavBar,
   },
+  store,
 };
 </script>
 

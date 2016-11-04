@@ -23,6 +23,8 @@ module.exports = {
   },
   "globals": {
     "Vue": true,
-    "Indicator": false
+    "Indicator": false,
+    "Toast": false,
+    "axios": false,
   }
 }

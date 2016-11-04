@@ -89,7 +89,9 @@ module.exports = {
   plugins: [
     new webpack.ProvidePlugin({
         Indicator: 'mint-ui/lib/indicator',
-        Vue: 'vue'
+        // Toast: 'mint-ui/lib/Toast',
+        Vue: 'vue',
+        // axios: 'axios'
       })
     ]
 }

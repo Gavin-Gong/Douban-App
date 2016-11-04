@@ -8,11 +8,11 @@
     <m-icon slot="icon" name="movie"></m-icon>
     电影
   </tab-item>
-  <tab-item id="music">
+<!--   <tab-item id="music">
     <m-icon slot="icon" name="music_note"></m-icon>
     音乐
-  </tab-item>
- <tab-item id="code" >
+  </tab-item> -->
+ <tab-item id="lab" >
     <m-icon slot="icon" name="code"></m-icon>
     代码
   </tab-item>
