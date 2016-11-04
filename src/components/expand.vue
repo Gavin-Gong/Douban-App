@@ -3,10 +3,13 @@
     <div class="expand-text">
       <!-- <slot></slot> -->
       <p>{{title}}</p>
-      <p v-if="type === 'text'" :style="tempToggle ? '-webkit-line-clamp: 10000;' : '-webkit-line-clamp: ' + line + ';'">{{content ? content : '暂无' + title}}</p>
-      <p v-if="type === 'html'" :style="tempToggle ? '-webkit-line-clamp: 10000;' : '-webkit-line-clamp: ' + line + ';'" v-html="content ? content : '暂无' + title"></p>
+      <p
+        v-if="type === 'text'"
+        :style="tempToggle ? '-webkit-line-clamp: 10000;' : '-webkit-line-clamp: ' + tempLine + ';'"
+        ref="ctx">{{content ? content : '暂无' + title}}</p>
+     <!--  <p v-if="type === 'html'" :style="tempToggle ? '-webkit-line-clamp: 10000;' : '-webkit-line-clamp: ' + line + ';'" v-html="content ? content : '暂无' + title"></p> -->
     </div>
-    <div v-if="content" :class="['toggle-btn', tempToggle ? 'up-arrow' : 'down-arrow']" @click="toggleText"></div>
+    <div v-if="content && showToggle" :class="['toggle-btn', tempToggle ? 'up-arrow' : 'down-arrow']" @click="toggleText"></div>
   </div>
 </template>
 
@@ -37,6 +40,8 @@
     data () {
       return {
         tempToggle: this.toggle,
+        showToggle: false,
+        tempLine: '',
       };
     },
     methods: {
@@ -47,6 +52,26 @@
           this.tempToggle = true;
         }
       },
+
+      getLineTotal () {
+        console.log(this.$el);
+        console.log(this.$refs.ctx);
+        if (this.$refs.ctx) {
+          let styles = window.getComputedStyle(this.$refs.ctx, null);
+          let totalHeight = styles.height.replace('px', '');
+          let lineHeight = styles.lineHeight.replace('px', '');
+          console.log('lineHeight');
+          return Math.ceil(totalHeight / lineHeight);
+        }
+      },
+    },
+    mounted () {
+      // 小于指定行数 -> 取消开关
+      if (this.getLineTotal() > parseInt(this.line)) {
+        this.showToggle = true;
+        console.log(this.line);
+        this.tempLine = this.line;
+      }
     },
   };
 </script>

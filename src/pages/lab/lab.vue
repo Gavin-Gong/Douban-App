@@ -1,11 +1,22 @@
 <template>
-  <div>
-  <h3 style="text-align:center; margin-top: 20px">代码实验室</h3>
+  <transition
+    mode="out-in"
+    enter-active-class="animated slideInUp"
+    >
+    <div>
+      <h3 style="text-align:center; margin-top: 20px">代码实验室</h3>
     <!-- <child></child> -->
-  </div>
-
+    </div>
+  </transition>
 </template>
-
+<style>
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s
+  }
+  .fade-enter, .fade-leave-active {
+    opacity: 0
+  }
+</style>
 <script>
   import TitleBar from 'components/title-bar';
   import Child from 'pages/lab/child';
@@ -28,6 +39,9 @@
       consoleSth (arg) {
         console.log(arg);
       },
+    },
+    deactivated () {
+      this.$destroy();
     },
   };
 </script>

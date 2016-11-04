@@ -1,5 +1,5 @@
 <template>
-<div class="annotation-detail l-spacing">
+<div class="annotation-detail l-spacing" v-if="annotationDetail.content">
   <p v-html="annotationDetail.content.replace(/\n/g, '<br>')"></p>
 </div>
 </template>
