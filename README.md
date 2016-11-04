@@ -1,6 +1,7 @@
 # Douban-App
 Douban Web App build with Vue 2.0
 ## TODO
+- [ ] Google Font
 - [ ] transition
 - [ ] 记住滚动位置
 - [X] keep-alive
